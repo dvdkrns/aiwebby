@@ -7,11 +7,10 @@ st.markdown(
     "<h1 style='text-align: center;'>The Guessing Game for Fame</h1>",
     unsafe_allow_html=True,
 )
-st.write("This is for TurboTobyThomasThelen.")
 
 # playing around with the color 
 st.markdown(
-    "<p style='text-align: center; color: gray;'>This is the first task for the AI and the Web course.</p>", 
+    "<p style='text-align: center; color: gray;'>This is the first task for the AI and the Web course aka for TurboTobyThomasThelen.</p>", 
     unsafe_allow_html=True,
 )
 
