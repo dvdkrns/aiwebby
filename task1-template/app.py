@@ -4,7 +4,7 @@ import streamlit as st
 # i wanted to center the title and caption which is not possiblie in Streamlit
 # i used markdown instead and looked up how to center it
 st.markdown(
-    "<h1 style='text-align: center;'>The Guessing Game</h1>",
+    "<h1 style='text-align: center;'>The Guessing Game for Fame</h1>",
     unsafe_allow_html=True,
 )
 st.write("This is for TurboTobyThomasThelen.")
