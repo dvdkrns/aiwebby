@@ -4,7 +4,7 @@ import streamlit as st
 # i wanted to center the title and caption which is not possiblie in Streamlit
 # i used markdown instead and looked up how to center it
 st.markdown(
-    "<h1 style='text-align: center;'>The Guessing Game for Fame</h1>",
+    "<h1 style='text-align: center;'>The Guessing Game - POKÉMON edition!</h1>",
     unsafe_allow_html=True,
 )
 
@@ -20,17 +20,11 @@ st.markdown(''':gray[This is the first task for the] :gray[**AI and the Web**] :
             unsafe_allow_html=True,
 )
 
-
-
 # interactive field where people can enter their name
 name = st.text_input("What's your name?", type="default", placeholder="Enter your name here")
-st.write("Hello, ", name, "! Are you ready to play?")
+st.write("Hello, ", name, "! Are you ready to catch your first POKÉMON?")
 
-st.button("Reset", type="primary")
-if st.button("Say hello"):
-    st.write("Why hello there")
-else:
-    st.write("Goodbye")
 
-if st.button("Aloha", type="tertiary"):
-    st.write("Ciao")
+guess = st.chat_input("Guess")
+if guess:
+    st.write(f"User has sent the following guess: {guess}")
