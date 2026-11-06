@@ -20,7 +20,17 @@ st.markdown(''':gray[This is the first task for the] :gray[**AI and the Web**] :
             unsafe_allow_html=True,
 )
 
+
+
 # interactive field where people can enter their name
 name = st.text_input("What's your name?", type="default", placeholder="Enter your name here")
 st.write("Hello, ", name, "! Are you ready to play?")
 
+st.button("Reset", type="primary")
+if st.button("Say hello"):
+    st.write("Why hello there")
+else:
+    st.write("Goodbye")
+
+if st.button("Aloha", type="tertiary"):
+    st.write("Ciao")
