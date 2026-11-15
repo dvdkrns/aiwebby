@@ -1,8 +1,7 @@
 import streamlit as st
 from openai import OpenAI, AuthenticationError, OpenAIError
+import random
 
-
-st.set_page_config(page_title="Meine KI-App")
 mapi = st.secrets.uos.API_UOS
 # ── ask for API Key, stop if not yet provided  ────────────────────────────────────────────
 with st.sidebar:
@@ -25,6 +24,7 @@ client = OpenAI(
 )
 
 # ── Main program logic starts here ────────────────────
+#-------------------------------------------------------
 # i wanted to center the title and caption which is not possiblie in Streamlit
 # i used markdown instead and looked up how to center it
 st.markdown(
@@ -46,14 +46,22 @@ st.markdown(''':gray[This is the first task for the] :gray[**AI and the Web**] :
 
 # interactive field where people can enter their name
 name = st.text_input("What's your name?", type="default", placeholder="Enter your name here")
-st.write("Hello, ", name, "! Are you ready to catch your first POKÉMON?")
+# only shows after you enter your name 
+if name not in ["", None]: 
+    st.write("Hello, ", name, "! Are you ready to catch your first POKÉMON?")
 
 # interactive field where people can enter their guess
 guess = st.text_area("Guess the POKÉMON!")
 
+# guessing game logic 
+# generate a random pokemon using OpenAI (use the most prominent pokemons for that)
+# if there is a guess, we can submit it
+# we need to check if the guess is correct (if it is the correct pokemon)
+
 if st.button("Submit", disabled=not guess.strip()):
     try:
-        with st.spinner("Answer is being created …"):
+        # not sure if we check it here???
+        with st.spinner("Checking if your guess is correct..."):
             response = client.chat.completions.create(
                 model="google/gemma-4-E4B-it",
                 messages=[
@@ -64,7 +72,7 @@ if st.button("Submit", disabled=not guess.strip()):
         st.write(response.choices[0].message.content)
 
     except AuthenticationError:
-        st.error("API was not accept. Please check it.")
+        st.error("API was not accepted. Please check it.")
 
     except OpenAIError:
         st.error(

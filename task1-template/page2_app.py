@@ -1,7 +1,7 @@
 import streamlit as st
 
-st.header("Page 2")
+st.header("Stats")
 
 st.markdown("""
-Nothing to see here.
+Statistics will be visible here.
 """)
