@@ -32,12 +32,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# playing around with the color 
-st.markdown(
-    "<p style='text-align: center; color: gray;'>This is the first task for the AI and the Web course aka for TurboTobyThomasThelen.</p>", 
-    unsafe_allow_html=True,
-)
-
 # but I wanted to also use bold and color, plus have it centered 
 st.markdown(''':gray[This is the first task for the] :gray[**AI and the Web**] :gray[ course.]''',
             text_alignment="center", 
@@ -52,12 +46,6 @@ if name not in ["", None]:
 
 # interactive field where people can enter their guess
 guess = st.text_area("Guess the POKÉMON!")
-
-# guessing game logic 
-# generate a random pokemon using OpenAI (use the most prominent pokemons for that)
-# if there is a guess, we can submit it
-# we need to check if the guess is correct (if it is the correct pokemon)
-
 if st.button("Submit", disabled=not guess.strip()):
     try:
         # not sure if we check it here???
@@ -78,6 +66,40 @@ if st.button("Submit", disabled=not guess.strip()):
         st.error(
             "AI API request failed. Please check it and try again. "
         )
+# guessing game logic 
+# generate a random pokemon using OpenAI (use the most famous pokemons for that)
+if "pokemon" not in st.session_state:
+    with st.spinner("Generating a random POKÉMON..."):
+        response = client.chat.completions.create(
+            model="google/gemma-4-E4B-it",
+            messages=[
+                {"role": "user", "content": "Generate a random POKÉMON from the first generation (1-151) and return only its name."
+                }
+            ],
+        )
+    st.session_state["pokemon"] = response.choices[0].message.content.strip()
+    st.info("A new POKÉMON has been generated! Try to guess it.")
+
+# if there is a guess, we can submit it
+if guess.strip():
+    st.write(f"You guessed: {guess}")
+    # we need to check if the guess is correct 
+    if guess.strip().lower() == st.session_state["pokemon"].lower():
+        st.success("Congratulations! You guessed the correct POKÉMON!")
+        del st.session_state["pokemon"]  # reset for a new game
+    else:
+        st.error("Sorry, that's not the correct POKÉMON. Try again!")
+
+# if the player guesses wrong 3x, we give them a hint
+# we can tell them what color the pokemon is, or what type it is
+
+# if the guess is not correct, we give the option to reset the game and generate a new pokemon.
+if st.button("Reset", type="primary"):
+    del st.session_state["pokemon"]
+    st.info("The game has been reset. A new POKÉMON will be generated on your next guess.")
+
+# update data structures for statistics and chat view (counting guesses, perhaps maintaining a history etc.
+
 
 if st.button("Go to page 2"):
     st.switch_page("page2_app.py")
